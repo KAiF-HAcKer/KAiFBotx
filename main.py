@@ -1,17 +1,21 @@
 import asyncio
 import random
 from telethon import TelegramClient, events
+
 # Telegram credentials
 api_id = 23593382
 api_hash = '4b73f8a581a09927e3ee82a05bf1ecac'
 session_name = 'Cyb_Exploit'
+
 client = TelegramClient(session_name, api_id, api_hash)
+
 OWNER_ID = 1402249972
 target_id = None
 target_mention = None
+
 # Spam message list
 custom_msgs = [
-    "Sala ramdi baap hu tera mummy ko bhj dena mere pass",
+     "Sala ramdi baap hu tera mummy ko bhj dena mere pass",
     "TERI MAAAKI CHUDAI KO PORNHUB.COM PE UPLOAD KARDUNGA SUAR KE CHODE 🤣💋💦",
     "Bsdke Baap se panga lega Teri mummy aur bahen ko sath me pelu ga bsdke",
     "Bsdke Baap se panga lega Speed Badha typing ki Mc😂💦💦.",
@@ -39,9 +43,10 @@ custom_msgs = [
     "Teri Mummy ki chut bhi petrol se jala kar maru ga bskdee kids.",
     "Teri mummy ki chut me BMW Ka sallancer de duga ramdi ki aulad🗿💀.",
 ]
+
 # Keyword triggers
 keyword_replies = {
-   "Teri maaki chut": "Randi ke pille, teri maa ke ch*t mein petrol daal ke BMW-M5 ka silencer ghused doonga, poora mohalla jala doonga! 😈🔥🚗💣",
+    "Teri maaki chut": "Randi ke pille, teri maa ke ch*t mein petrol daal ke BMW-M5 ka silencer ghused doonga, poora mohalla jala doonga! 😈🔥🚗💣",
     "Chup mc": "Speed pakad, bhosd*ke, teri maa ke bh*sdwa mein typing ka keyboard hi ghused doonga! 😡💻💥",
     "Teri bhen ki chut": "Kya, teri behen ka l*nd hai? Usko toh hum poora Patna ka traffic signal bana ke pel doonga! 😜🚦🔥",
     "Gand mar duga": "Teri mummy ke ch*t mein atom bomb daal ke poora UP-Bihar uda doonga, maderchod ke aulad! 💪💣⚡",
@@ -92,19 +97,24 @@ keyword_replies = {
     "Haram ke chhore": "Haram ke chhore, teri behen ke bh*sde mein poora Panipat ka handloom bhar ke tujhe shawl bechne wala bana du! 🧶😈💪",
     "Bakchodi na kar": "Bakchodi na kar, saale, teri ga*nd mein poora Kurukshetra ka Mahabharat ka yudh daal ke tujhe Arjun bana du! ⚔️😡💥"
 }
+
 # Command: .hacker @username message repeat_count
 @client.on(events.NewMessage(pattern=r'\.hacker(?:\s+@?(\w+))?(?:\s+(.+?)\s+(\d+))?'))
 async def set_target(event):
     if event.sender_id != OWNER_ID:
         return
+
     global target_id, target_mention
+
     if event.is_private:
         await event.reply("Ye command sirf group me chalti hai.")
         return
+
     match = event.pattern_match
     username = match.group(1)
     custom_text = match.group(2)
     repeat_count = match.group(3)
+
     if username and custom_text and repeat_count:
         try:
             user = await client.get_entity(username)
@@ -118,6 +128,7 @@ async def set_target(event):
         except Exception as e:
             await event.reply(f"Error: {e}")
         return
+
     if not username and event.is_reply:
         reply_msg = await event.get_reply_message()
         sender = await reply_msg.get_sender()
@@ -127,16 +138,18 @@ async def set_target(event):
         for _ in range(random.randint(8, 9)):
             await asyncio.sleep(0.5)
             await event.reply(f"{target_mention} {random.choice(custom_msgs)}", parse_mode='md')
+
     elif username:
         try:
             user = await client.get_entity(username)
             target_id = user.id
             target_mention = f"[{user.first_name}](tg://user?id={user.id})"
-        await event.reply(f"Target set: {user.first_name}")
+            await event.reply(f"Target set: {user.first_name}")
         except Exception as e:
             await event.reply(f"Failed to set target: {e}")
     else:
         await event.reply("Use `.hacker @username <message> <count>` ya reply karo kisi user ke message par.")
+
 # Command to stop the raid manually
 @client.on(events.NewMessage(pattern=r'\.stop'))
 async def stop_raid(event):
@@ -146,6 +159,7 @@ async def stop_raid(event):
     target_id = None
     target_mention = None
     await event.reply("Raid band kar diya gaya.")
+
 # Auto-reply logic with mention
 @client.on(events.NewMessage)
 async def auto_raid(event):
@@ -160,6 +174,7 @@ async def auto_raid(event):
             for _ in range(random.randint(5, 6)):
                 await asyncio.sleep(0.4)
                 await event.reply(f"{target_mention} {random.choice(custom_msgs)}", parse_mode='md')
+
 # Start client
 client.start()
 print("KAiF Raid Bot is running...")
