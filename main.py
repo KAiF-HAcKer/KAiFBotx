@@ -107,7 +107,7 @@ async def set_target(event):
     global target_id, target_mention
 
     if event.is_private:
-        await event.reply("Ye command sirf group me chalti hai.")
+        await event.reply("Only Group Chats.")
         return
 
     match = event.pattern_match
@@ -158,7 +158,7 @@ async def stop_raid(event):
     global target_id, target_mention
     target_id = None
     target_mention = None
-    await event.reply("Raid band kar diya gaya.")
+    await event.reply("Bhg Ja Mc yaha se Warna Gand mar duga 💀💀.")
 
 # Auto-reply logic
 @client.on(events.NewMessage)
