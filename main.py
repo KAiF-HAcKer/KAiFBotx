@@ -9,13 +9,13 @@ session_name = 'Cyb_Exploit'
 
 client = TelegramClient(session_name, api_id, api_hash)
 
-OWNER_ID = 1402249972
+OWNER_ID = 7750987859  # Only this ID can control the bot
 target_id = None
 target_mention = None
 
-# Spam message list
+# Spam messages
 custom_msgs = [
-     "Sala ramdi baap hu tera mummy ko bhj dena mere pass",
+    "Sala ramdi baap hu tera mummy ko bhj dena mere pass",
     "TERI MAAAKI CHUDAI KO PORNHUB.COM PE UPLOAD KARDUNGA SUAR KE CHODE 🤣💋💦",
     "Bsdke Baap se panga lega Teri mummy aur bahen ko sath me pelu ga bsdke",
     "Bsdke Baap se panga lega Speed Badha typing ki Mc😂💦💦.",
@@ -44,7 +44,7 @@ custom_msgs = [
     "Teri mummy ki chut me BMW Ka sallancer de duga ramdi ki aulad🗿💀.",
 ]
 
-# Keyword triggers
+# Keyword-based auto replies (truncated here for brevity)
 keyword_replies = {
     "Teri maaki chut": "Randi ke pille, teri maa ke ch*t mein petrol daal ke BMW-M5 ka silencer ghused doonga, poora mohalla jala doonga! 😈🔥🚗💣",
     "Chup mc": "Speed pakad, bhosd*ke, teri maa ke bh*sdwa mein typing ka keyboard hi ghused doonga! 😡💻💥",
@@ -160,7 +160,7 @@ async def stop_raid(event):
     target_mention = None
     await event.reply("Raid band kar diya gaya.")
 
-# Auto-reply logic with mention
+# Auto-reply logic
 @client.on(events.NewMessage)
 async def auto_raid(event):
     global target_id, target_mention
