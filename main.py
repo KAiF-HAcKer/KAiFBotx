@@ -12,15 +12,12 @@ OWNER_ID = 7750987859
 sudo_users = set()
 allowed_users = {OWNER_ID}
 
-# Targets
 target_id = None
 target_mention = None
 auto_reply_enabled = False
 active_count_target = None
 
-# Bhai msg
-bhai_msgs = [
-    "Tera dard mera dard hai bhai.",
+bhai_msgs = [ "Tera dard mera dard hai bhai.",
     "Bhabhi ke haath ka khana khilwado voi.",
     "Tere jaisa bhai har kisi ko mile, yahi dua hai.",
     "Bhai ke liye jaan bhi haazir hai.",
@@ -31,12 +28,10 @@ bhai_msgs = [
     "Bhai tu tension mat le, tu apna hai.",
     "Kisne rulaya bhai ko bhenchod duga teri 64pe.",
     "Bhai tu chinta mat kar, sab theek ho jaayega.",
-    "Bhai tu safe hai, ab koi reply nahi aayega.",
-]
-
-# Gaali msg
-custom_msgs = [
-    "Sala ramdi baap hu tera mummy ko bhj dena mere pass",
+    "Bhai tu safe hai, ab koi reply nahi aayega.",]
+    
+    
+custom_msgs = [ "Sala ramdi baap hu tera mummy ko bhj dena mere pass",
     "TERI MAAAKI CHUDAI KO PORNHUB.COM PE UPLOAD KARDUNGA SUAR KE CHODE 🤣💋💦",
     "Bsdke Baap se panga lega Teri mummy aur bahen ko sath me pelu ga bsdke",
     "Bsdke Baap se panga lega Speed Badha typing ki Mc😂💦💦.",
@@ -62,12 +57,10 @@ custom_msgs = [
     "Abe tu janta nhi hai mere ko Randi tera baap hu Exploit Hacker.",
     "Teri maa ke cht mein petrol daal ke hum BMW-M5 ka silencer ghused di, aur poora mohalla jala di, randi ke bhosdke! 😈🔥🚗💣",
     "Teri Mummy ki chut bhi petrol se jala kar maru ga bskdee kids.",
-    "Teri mummy ki chut me BMW Ka sallancer de duga ramdi ki aulad🗿💀."
-]
-
-# Pyar msg
-love_msgs = [
-    "I like u me tumse kitna pyar kartu hu tum aoch bhi nhi sakti cutie.",
+    "Teri mummy ki chut me BMW Ka sallancer de duga ramdi ki aulad🗿💀.",]
+    
+    
+love_msgs = [ "I like u me tumse kitna pyar kartu hu tum aoch bhi nhi sakti cutie.",
     "Cutie tum kitni pyari ho yrr.",
     "I love u Cutie.",
     "App mere siva kise se pyar kar hi nhi kaati ho.",
@@ -88,10 +81,8 @@ love_msgs = [
     "Tumhare bina sab kuch suna suna lagta hai.",
     "Main har din tumhara intezar karta hoon.",
     "Mujhe har pal tumhari yaad aati hai.",
-    "Tere saath zindagi ek pyari kahani lagti hai.",
-]
+    "Tere saath zindagi ek pyari kahani lagti hai.", ] 
 
-# Keywords
 keyword_replies = {
     "Teri maaki chut": "Randi ke pille, teri maa ke ch*t mein petrol daal ke BMW-M5 ka silencer ghused doonga, poora mohalla jala doonga! 😈🔥🚗💣",
     "Chup mc": "Speed pakad, bhosd*ke, teri maa ke bh*sdwa mein typing ka keyboard hi ghused doonga! 😡💻💥",
@@ -145,32 +136,31 @@ keyword_replies = {
     "Bakchodi na kar": "Bakchodi na kar, saale, teri ga*nd mein poora Kurukshetra ka Mahabharat ka yudh daal ke tujhe Arjun bana du! ⚔️😡💥",
 }
 
-# Add Sudo
-@client.on(events.NewMessage(pattern=r'\\.sudosu'))
+@client.on(events.NewMessage(pattern=r'\.sudosu'))
 async def add_sudo(event):
-    if event.sender_id != OWNER_ID: return
+    if event.sender_id != OWNER_ID:
+        return
     if event.is_reply:
         r = await event.get_reply_message()
         sudo_users.add(r.sender_id)
         allowed_users.add(r.sender_id)
         await event.reply(f"Sudo added: {r.sender_id}")
 
-# Remove Sudo
-@client.on(events.NewMessage(pattern=r'\\.unsudosu'))
+@client.on(events.NewMessage(pattern=r'\.unsudosu'))
 async def remove_sudo(event):
-    if event.sender_id != OWNER_ID: return
+    if event.sender_id != OWNER_ID:
+        return
     if event.is_reply:
         r = await event.get_reply_message()
         sudo_users.discard(r.sender_id)
         allowed_users.discard(r.sender_id)
         await event.reply(f"Sudo removed: {r.sender_id}")
 
-# .hacker target command
-@client.on(events.NewMessage(pattern=r'\\.hacker(?:\\s+@?(\\w+))?(?:\\s+(.+?)\\s+(\\d+))?'))
+@client.on(events.NewMessage(pattern=r'\.hacker(?:\s+@?(\w+))?(?:\s+(.+?)\s+(\d+))?'))
 async def set_target(event):
-    if event.sender_id not in allowed_users: return
+    if event.sender_id not in allowed_users:
+        return
     global target_id, target_mention, auto_reply_enabled, active_count_target
-
     match = event.pattern_match
     username = match.group(1)
     text = match.group(2)
@@ -205,12 +195,11 @@ async def set_target(event):
     else:
         await event.reply("`.hacker @username msg count` ya reply karo.")
 
-# .pyar command
-@client.on(events.NewMessage(pattern=r'\\.pyar(?:\\s+@?(\\w+))?(?:\\s+(\\d+))?'))
+@client.on(events.NewMessage(pattern=r'\.pyar(?:\s+@?(\w+))?(?:\s+(\d+))?'))
 async def send_love(event):
-    if event.sender_id not in allowed_users: return
+    if event.sender_id not in allowed_users:
+        return
     global target_id, target_mention, auto_reply_enabled, active_count_target
-
     match = event.pattern_match
     username = match.group(1)
 
@@ -221,43 +210,42 @@ async def send_love(event):
             r = await event.get_reply_message()
             user = await r.get_sender()
         else:
-            await event.reply(\"`.pyar @username` ya reply karo.\")
+            await event.reply("`.pyar @username` ya reply karo.")
             return
         target_id = user.id
-        target_mention = f\"[{user.first_name}](tg://user?id={user.id})\"
-        await event.reply(f\"Pyar for {user.first_name}:\")
-        await event.reply(f\"{target_mention} {random.choice(love_msgs)}\", parse_mode='md')
+        target_mention = f"[{user.first_name}](tg://user?id={user.id})"
+        await event.reply(f"Pyar for {user.first_name}:")
+        await event.reply(f"{target_mention} {random.choice(love_msgs)}", parse_mode='md')
         auto_reply_enabled = False
         active_count_target = None
     except Exception as e:
-        await event.reply(f\"Error: {e}\")
+        await event.reply(f"Error: {e}")
 
-# .stop command
-@client.on(events.NewMessage(pattern=r'\\.stop'))
+@client.on(events.NewMessage(pattern=r'\.stop'))
 async def stop_all(event):
-    if event.sender_id not in allowed_users: return
+    if event.sender_id not in allowed_users:
+        return
     global target_id, target_mention, auto_reply_enabled, active_count_target
     target_id = None
     target_mention = None
     auto_reply_enabled = False
     active_count_target = None
-    await event.reply(\"All modes stopped.\")
+    await event.reply("All modes stopped.")
 
-# Main auto-reply logic
 @client.on(events.NewMessage)
 async def auto_raid(event):
     global target_id, target_mention, auto_reply_enabled, active_count_target
     msg = event.raw_text.lower()
 
-    if event.sender_id == OWNER_ID and \".bhai\" in msg:
+    if event.sender_id == OWNER_ID and ".bhai" in msg:
         if target_id and target_mention:
             for m in bhai_msgs:
                 await asyncio.sleep(0.5)
-                await event.reply(f\"{target_mention} {m}\", parse_mode='md')
+                await event.reply(f"{target_mention} {m}", parse_mode='md')
             auto_reply_enabled = False
             active_count_target = None
         else:
-            await event.reply(\"No target active.\")
+            await event.reply("No target active.")
         return
 
     if target_id and event.sender_id == target_id:
@@ -265,13 +253,13 @@ async def auto_raid(event):
             return
         for k, v in keyword_replies.items():
             if k in msg:
-                await event.reply(f\"{target_mention} {v}\", parse_mode='md')
+                await event.reply(f"{target_mention} {v}", parse_mode='md')
                 return
         for _ in range(random.randint(5, 6)):
             await asyncio.sleep(0.4)
-            await event.reply(f\"{target_mention} {random.choice(custom_msgs)}\", parse_mode='md')
+            await event.reply(f"{target_mention} {random.choice(custom_msgs)}", parse_mode='md')
 
-# Start client
+# Start bot
 client.start()
-print(\"KAiF Raid  UserBot is running...\")
+print("KAiF Raid UserBot is running...")
 client.run_until_disconnected()
