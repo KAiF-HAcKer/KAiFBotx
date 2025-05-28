@@ -206,7 +206,7 @@ async def hacker(event):
         target_mention = f"[{sender.first_name}](tg://user?id={sender.id})"
         auto_reply_enabled = True
         active_count_target = None
-        await event.reply(f"Auto-reply ON for: {sender.first_name}")
+        await event.reply(f"Ab teri mummy ki chudai kare ga Exploit HAcKer: {sender.first_name}")
         for _ in range(random.randint(8, 9)):
             await asyncio.sleep(0.5)
             await event.reply(f"{target_mention} {random.choice(custom_msgs)}", parse_mode='md')
@@ -232,7 +232,7 @@ async def love(event):
             return await event.reply("`.love @username 10` ya reply karo.")
         target_id = user.id
         target_mention = f"[{user.first_name}](tg://user?id={user.id})"
-        await event.reply(f"Sending {count} love messages to {user.first_name}...")
+        await event.reply(f"Love U Baby {count} 🤍🥹 {user.first_name}...")
         for _ in range(count):
             await asyncio.sleep(0.5)
             await event.reply(f"{target_mention} {random.choice(love_msgs)}", parse_mode='md')
@@ -243,21 +243,43 @@ async def love(event):
         await event.reply(f"Error: {e}")
 
 # .bro command
-@client.on(events.NewMessage(pattern=r'\.bro(?:\s+(\d+))?'))
+@client.on(events.NewMessage(pattern=r'\.bro(?:\s+@?(\w+))?(?:\s+(\d+))?'))
 async def bro(event):
     if event.sender_id not in allowed_users:
         return
     global target_id, target_mention
-    count = int(event.pattern_match.group(1)) if event.pattern_match.group(1) else 10
-    if not target_id or not target_mention:
-        return await event.reply("No active target set. Use `.hacker` reply to someone first.")
-    await event.reply(f"Sending {count} bro messages...")
-    for _ in range(count):
-        await asyncio.sleep(0.5)
-        await event.reply(f"{target_mention} {random.choice(bhai_msgs)}", parse_mode='md')
-    # Disable auto trigger after bro
-    target_id = None
-    target_mention = None
+
+    username = event.pattern_match.group(1)
+    count = int(event.pattern_match.group(2)) if event.pattern_match.group(2) else random.randint(5, 6)
+
+    try:
+        # Agar @username diya hai
+        if username:
+            user = await client.get_entity(username)
+            target_id = user.id
+            target_mention = f"[{user.first_name}](tg://user?id={user.id})"
+
+        # Agar reply diya hai
+        elif event.is_reply:
+            user = await (await event.get_reply_message()).get_sender()
+            target_id = user.id
+            target_mention = f"[{user.first_name}](tg://user?id={user.id})"
+
+        # Nahi to error
+        else:
+            return await event.reply("Reply karo ya `.bro @username 10` likho.")
+
+        await event.reply(f"Brother {count} 🤍🫂...")
+        for _ in range(count):
+            await asyncio.sleep(0.5)
+            await event.reply(f"{target_mention} {random.choice(bhai_msgs)}", parse_mode='md')
+
+        # Target reset
+        target_id = None
+        target_mention = None
+
+    except Exception as e:
+        await event.reply(f"Error: {e}")
 
 # .stop command
 @client.on(events.NewMessage(pattern=r'\.stop'))
@@ -269,7 +291,7 @@ async def stop(event):
     target_mention = None
     auto_reply_enabled = False
     active_count_target = None
-    await event.reply("All modes stopped.")
+    await event.reply("💦💦")
 
 # Auto reply listener
 @client.on(events.NewMessage)
